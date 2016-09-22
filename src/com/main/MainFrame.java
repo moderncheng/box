@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class MainFrame extends JFrame implements KeyListener{
 	JLabel jlabel[][]=new JLabel[12][12];
@@ -15,6 +16,8 @@ public class MainFrame extends JFrame implements KeyListener{
 	JLabel renJLable=null;
 	int rx;
 	int ry;
+	int num=3;
+	int count=0;
 	public MainFrame(){
 		//窗口显示
 		this.setVisible(true);
@@ -82,6 +85,12 @@ public class MainFrame extends JFrame implements KeyListener{
 	    lab_bag.setBounds(0, 0,600,600);
 		this.add(lab_bag);
 	}
+	public void victory(){
+		if(count==num){
+			JOptionPane.showMessageDialog(null, "你赢了");
+		}
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -89,6 +98,9 @@ public class MainFrame extends JFrame implements KeyListener{
 		int y =(int)renJLable.getLocation().getY();
 		switch (e.getKeyCode()) {
 		case 37:
+			Icon left = new ImageIcon("image/ren.png");
+			renJLable.setIcon(left);
+			
 			if(map[ry][rx-1]==1){
 				return;
 			}
@@ -102,16 +114,32 @@ public class MainFrame extends JFrame implements KeyListener{
 				jlabel[ry][rx-2] = jlabel[ry][rx-1];
 				jlabel[ry][rx-1] = null;
 			}
+			if(map[ry][rx-1]==2&&map[ry][rx-2]==2){
+				return;
+			}
+			if(map[ry][rx-1]==2&&map[ry][rx-2]==3){
+				map[ry][rx-1]=0;
+				map[ry][rx-2]=2;
+				jlabel[ry][rx-1].setLocation(rx*50-100,ry*50);
+				jlabel[ry][rx-2] = jlabel[ry][rx-1];
+				jlabel[ry][rx-1] = null;
+				count++;
+				
+			}
+			this.victory();
 			rx--;
-			Icon left = new ImageIcon("image/ren.png");
-			renJLable.setIcon(left);
 			renJLable.setLocation(x-50,y);
 			break;
 	    case 38:
+	    	Icon up = new ImageIcon("image/ren_up.png");
+	    	renJLable.setIcon(up);
 	    	if(map[ry-1][rx]==1){
 				return;
 			}
 			if(map[ry-1][rx]==2&&map[ry-2][rx]==1){
+				return;
+			}
+			if(map[ry-1][rx]==2&&map[ry-2][rx]==2){
 				return;
 			}
 			if(map[ry-1][rx]==2&&map[ry-2][rx]==0){
@@ -121,16 +149,28 @@ public class MainFrame extends JFrame implements KeyListener{
 				jlabel[ry-2][rx] = jlabel[ry-1][rx];
 				jlabel[ry-1][rx] = null;
 			}
-	    	Icon up = new ImageIcon("image/ren_up.png");
-	    	renJLable.setIcon(up);
+			if(map[ry-1][rx]==2&&map[ry-2][rx]==3){
+				map[ry-1][rx]=0;
+				map[ry-2][rx]=2;
+				jlabel[ry-1][rx].setLocation(rx*50,ry*50-100);
+				jlabel[ry-2][rx] = jlabel[ry-1][rx];
+				jlabel[ry-1][rx] = null;
+				count++;
+			}
+	    	this.victory();
 	    	ry--;
 	    	renJLable.setLocation(x, y-50);
 			break;
         case 39:
+        	Icon right = new ImageIcon("image/ren_right.png");
+        	renJLable.setIcon(right);
         	if(map[ry][rx+1]==1){
 				return;
 			}
 			if(map[ry][rx+1]==2&&map[ry][rx+2]==1){
+				return;
+			}
+			if(map[ry][rx+1]==2&&map[ry][rx+2]==2){
 				return;
 			}
 			if(map[ry][rx+1]==2&&map[ry][rx+2]==0){
@@ -140,16 +180,28 @@ public class MainFrame extends JFrame implements KeyListener{
 				jlabel[ry][rx+2] = jlabel[ry][rx+1];
 				jlabel[ry][rx+1] = null;
 			}
-        	Icon right = new ImageIcon("image/ren_right.png");
-        	renJLable.setIcon(right);
+			if(map[ry][rx+1]==2&&map[ry][rx+2]==3){
+				map[ry][rx+1]=0;
+				map[ry][rx+2]=2;
+				jlabel[ry][rx+1].setLocation(rx*50+100,ry*50);
+				jlabel[ry][rx+2] = jlabel[ry][rx+1];
+				jlabel[ry][rx+1] = null;
+				count++;
+			}
+			this.victory();
         	rx++;
 	    	renJLable.setLocation(x+50,y);
 			break;
 	    case 40:
+	    	Icon down = new ImageIcon("image/ren_down.png");
+	    	renJLable.setIcon(down);
 	    	if(map[ry+1][rx]==1){
 				return;
 			}
 			if(map[ry+1][rx]==2&&map[ry+2][rx]==1){
+				return;
+			}
+			if(map[ry+1][rx]==2&&map[ry+2][rx]==2){
 				return;
 			}
 			if(map[ry+1][rx]==2&&map[ry+2][rx]==0){
@@ -159,9 +211,15 @@ public class MainFrame extends JFrame implements KeyListener{
 				jlabel[ry+2][rx] = jlabel[ry+1][rx];
 				jlabel[ry+1][rx] = null;
 			}
-			
-	    	Icon down = new ImageIcon("image/ren_down.png");
-	    	renJLable.setIcon(down);
+			if(map[ry+1][rx]==2&&map[ry+2][rx]==3){
+				map[ry+1][rx]=0;
+				map[ry+2][rx]=2;
+				jlabel[ry+1][rx].setLocation(rx*50,ry*50+100);
+				jlabel[ry+2][rx] = jlabel[ry+1][rx];
+				jlabel[ry+1][rx] = null;
+				count++;
+			}
+			this.victory();
 	    	ry++;
 	    	renJLable.setLocation(x, y+50);
 			break;
